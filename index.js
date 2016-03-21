@@ -5,19 +5,20 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 
 
-var gcloud = require('gcloud')({
+var gcloud = require('gcloud');
+
+var gcs = gcloud.storage({
   projectId: 'dola-gis-server',
-  // Specify a path to a keyfile.
   keyFilename: 'key/dola-gis-server-f143cd56dce3.json'
 });
 
-var gcs = gcloud.storage({ projectId: 'dola-gis-server' });
 var bucket = gcs.bucket('co-publicdata');
 
 bucket.acl.default.add({
     entity: 'allUsers',
-    role: storage.acl.READER_ROLE
+    role: gcs.acl.READER_ROLE
 }, function(err) {});
+
 
 mkdirp('data', function(err) { 
     console.log('data folder created');
