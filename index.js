@@ -24,7 +24,7 @@ var a = schedule.scheduleJob('* * * * *', function(){
     var bucket = gcs.bucket('maps-static');
     //bucket.upload('data/dlmetro.zip', function(err, file) {if (!err) { console.log('success with ' + file); } else {console.log(err); } });
     bucket.file('PlanningManagement8x11.pdf').download({
-  destination: '/data/PlanningManagement8x11.pdf'
+  destination: 'data/PlanningManagement8x11.pdf'
 }, function(err) {});
     });
 });
