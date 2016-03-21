@@ -4,6 +4,7 @@ MAINTAINER Daniel Trone "daniel.trone@state.co.us"
 ADD . .
   
 RUN apt-get install -y wget && \
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
 sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main" >> /etc/apt/sources.list' && \
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add - && \
 apt-get -qq update && \
