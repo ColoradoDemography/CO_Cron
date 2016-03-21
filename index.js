@@ -23,7 +23,9 @@ var a = schedule.scheduleJob('* * * * *', function(){
     var gcs = gcloud.storage({ projectId: 'dola-gis-server' });
     var bucket = gcs.bucket('co-publicdata');
     bucket.upload('data/dlmetro.zip', function(err, file) {if (!err) { console.log('success with ' + file); } else {console.log(err); } });
-});
+    });
+});  
+
 /*
 //park districts
 var b = schedule.scheduleJob('* * * * *', function(){
