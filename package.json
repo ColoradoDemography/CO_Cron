@@ -1,0 +1,27 @@
+{
+  "name": "co-cron",
+  "version": "0.0.1",
+  "description": "scheduler for colorado demography tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/royhobbstn/CO_Cron.git"
+  },
+  "keywords": [
+    "cron",
+    "schedule",
+    "scheduler"
+  ],
+  "author": "Daniel Trone",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/royhobbstn/CO_Cron/issues"
+  },
+  "homepage": "https://github.com/royhobbstn/CO_Cron#readme",
+  "dependencies": {
+    "node-schedule": "^1.1.0"
+  }
+}
