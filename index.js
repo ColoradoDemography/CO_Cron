@@ -2,6 +2,8 @@ var schedule = require('node-schedule');
 var exec = require('child_process').exec;
 var execSync = require('child_process').execSync;
 var mkdirp = require('mkdirp');
+var fs = require('fs');
+var gcloud = require('gcloud');
 
 mkdirp('data', function(err) { 
     console.log('data folder created');
@@ -13,9 +15,12 @@ var a = schedule.scheduleJob('* * * * *', function(){
     exec(command, {}, function (error, stdout, stderr) {
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
     execSync("zip -o data/dlmetro.zip data/dlmetro.dbf data/dlmetro.prj data/dlmetro.shp data/dlmetro.shx");
+    var gcs = gcloud.storage({ projectId: 'dola-gis-server' });
+    var bucket = gcs.bucket('co-publicdata');
+    bucket.upload('data/dlmetro.zip', function(err, file) {if (!err) { console.log('success with ' + file); } else {console.log(err); } });
     });
 });
-
+/*
 //park districts
 var b = schedule.scheduleJob('* * * * *', function(){
     var command="pgsql2shp -f data/dlpark -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='7';\" ";
@@ -24,7 +29,7 @@ var b = schedule.scheduleJob('* * * * *', function(){
     execSync("zip -o data/dlpark.zip data/dlpark.dbf data/dlpark.prj data/dlpark.shp data/dlpark.shx;");  
     });
 });
-/*
+
 //fire districts
 var c = schedule.scheduleJob('* * * * *', function(){
     var command="pgsql2shp -f data/dlfire -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='8';\" ";
