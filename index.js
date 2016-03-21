@@ -3,7 +3,12 @@ var exec = require('child_process').exec;
 var execSync = require('child_process').execSync;
 var mkdirp = require('mkdirp');
 var fs = require('fs');
-var gcloud = require('gcloud');
+
+
+var projectId = process.env.GCLOUD_PROJECT_ID; // E.g. 'grape-spaceship-123' 
+var gcloud = require('gcloud')({
+  projectId: projectId
+});
 
 mkdirp('data', function(err) { 
     console.log('data folder created');
