@@ -21,8 +21,11 @@ var a = schedule.scheduleJob('* * * * *', function(){
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
     execSync("zip -o data/dlmetro.zip data/dlmetro.dbf data/dlmetro.prj data/dlmetro.shp data/dlmetro.shx");
     var gcs = gcloud.storage({ projectId: 'dola-gis-server' });
-    var bucket = gcs.bucket('co-publicdata');
-    bucket.upload('data/dlmetro.zip', function(err, file) {if (!err) { console.log('success with ' + file); } else {console.log(err); } });
+    var bucket = gcs.bucket('maps-static');
+    //bucket.upload('data/dlmetro.zip', function(err, file) {if (!err) { console.log('success with ' + file); } else {console.log(err); } });
+    bucket.file('PlanningManagement8x11.pdf').download({
+  destination: '/data/PlanningManagement8x11.pdf'
+}, function(err) {});
     });
 });
 /*
