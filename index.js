@@ -5,10 +5,10 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 
 
-//var projectId = process.env.GCLOUD_PROJECT_ID; 
-
 var gcloud = require('gcloud')({
-  projectId: 'dola-gis-server'
+  projectId: 'dola-gis-server',
+  // Specify a path to a keyfile.
+  keyFilename: 'key/dola-gis-server-f143cd56dce3.json'
 });
 
 mkdirp('data', function(err) { 
@@ -23,7 +23,7 @@ var a = schedule.scheduleJob('* * * * *', function(){
     execSync("zip -o data/dlmetro.zip data/dlmetro.dbf data/dlmetro.prj data/dlmetro.shp data/dlmetro.shx");
     var gcs = gcloud.storage({ projectId: 'dola-gis-server' });
     var bucket = gcs.bucket('co-publicdata');
-    bucket.upload('data/dlmetro.zip', function(err, file) { });
+    bucket.upload('data/dlmetro.zip', function(err, file) {if (!err) { console.log('success with ' + file); } else {console.log(err); } });
     });
 });  
 

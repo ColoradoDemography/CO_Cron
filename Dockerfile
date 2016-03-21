@@ -13,6 +13,5 @@ apt-get install -y nodejs postgresql-9.4-postgis-2.1 postgis zip
 # If you need npm, don't use a base tag
 RUN npm install
 
-EXPOSE 3000
 
 CMD ["nodejs", "index.js"]
