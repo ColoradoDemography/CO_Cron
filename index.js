@@ -14,10 +14,10 @@ var gcs = gcloud.storage({
 
 var bucket = gcs.bucket('co-publicdata');
 
-bucket.acl.default.add({
-    entity: 'allUsers',
-    role: gcs.acl.READER_ROLE
-}, function(err) {});
+bucket.acl.add({
+  entity: 'allUsers',
+  role: gcs.acl.READER_ROLE
+}, function(err, aclObject) {});
 
 
 mkdirp('data', function(err) { 
