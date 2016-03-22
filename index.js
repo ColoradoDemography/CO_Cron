@@ -22,11 +22,28 @@ mkdirp('db', function(err) {
     console.log('db folder created');
 });
 
+
+function getTimeStamp() {
+    var now = new Date();
+    return ((now.getMonth() + 1) + '-' +
+            (now.getDate()) + '-' +
+             now.getFullYear() + "_" +
+             now.getHours() + '-' +
+             ((now.getMinutes() < 10)
+                 ? ("0" + now.getMinutes())
+                 : (now.getMinutes())) + '-' +
+             ((now.getSeconds() < 10)
+                 ? ("0" + now.getSeconds())
+                 : (now.getSeconds())));
+}
+
+var thisrun=getTimeStamp();
+
 //pg_dump test
-exec("pg_dump -Fc -h 104.197.26.248 -U postgres -p 5432 -d dola > db/dola.custom", {}, function (error, stdout, stderr) {
+exec('pg_dump -Fc -h 104.197.26.248 -U codemog -w -p 5433 -d dola > db/dola' + thisrun + '.custom', {}, function (error, stdout, stderr) {
     console.log('--db-dump--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    db_bucket.upload('db/dola.custom', function(err, file) {if (!err) { console.log('success uploading data/dlmetro.zip'); } else {console.log(err); } });
+    db_bucket.upload('db/dola' + thisrun + '.custom', function(err, file) {if (!err) { console.log('success uploading db/dola' + thisrun + '.custom'); } else {console.log(err); } });
 });
 
 
