@@ -15,7 +15,7 @@ $dbname = "dbname=dola";
 $credentials = "user=postgres";
 
 
-$str = file_get_contents('http://dola.colorado.gov/gis-tmp/lginfo.json');
+$str = file_get_contents('http://dola.colorado.gov/gis-tmp/limlevy.json');
 
 $json = json_decode($str, true); // decode the JSON into an associative array
 
@@ -28,33 +28,28 @@ $json = json_decode($str, true); // decode the JSON into an associative array
    }
    
    $sql =<<<EOF
-     DROP TABLE IF EXISTS bounds.lginfo;
+     DROP TABLE IF EXISTS bounds.limlevy;
      
-     CREATE TABLE bounds.lginfo
+     CREATE TABLE bounds.limlevy
 (  
   ID numeric,     
-  LG_ID text,
-  DLGNAME text,
-  ABBREV_NAME text,
-  LGTYPE_ID text,
-  TYPENAME text,
-  TYPE_CATEGORY text,     
-  STATUTE text,
-  LGSTATUS_ID text,
-  DESCRIPTION text,
-  URL text,    
-  PREV_NAME text, 
-  CONSTRAINT lginfo_pkey PRIMARY KEY (id)
+  LGID CHAR(5),
+  SUBDIST_NUM integer,
+  BUDGET_YEAR integer,
+  COUNTY CHAR(3),
+  ASSESSED_VALUE numeric,
+  TOTAL_LEVY numeric,
+  CONSTRAINT limlevy_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE bounds.lginfo
+ALTER TABLE bounds.limlevy
   OWNER TO postgres;
-GRANT ALL ON TABLE bounds.lginfo TO postgres;
-GRANT SELECT ON TABLE bounds.lginfo TO codemog;
+GRANT ALL ON TABLE bounds.limlevy TO postgres;
+GRANT SELECT ON TABLE bounds.limlevy TO codemog;
 
-CREATE INDEX idx_lginfo_lgid ON bounds.lginfo USING btree (LG_ID);
+CREATE INDEX idx_limlevy_lgid ON bounds.limlevy USING btree (LGID);
 EOF;
 
    $ret = pg_query($db, $sql);
@@ -70,18 +65,18 @@ $incr=0;
 foreach ($json as $value) {
   
   $incr=$incr+1;
-
+  
+  //echo $value['LG_ID'];
 
   //enter values in order.  remember the first field needs to be a calculated unique auto-incremented integer.
   
-    $sql ="INSERT INTO bounds.lginfo VALUES ('".$incr."', '".pg_escape_string($value['LG_ID'])."', '".pg_escape_string($value['DLGNAME'])."', '".pg_escape_string($value['ABBREV_NAME'])."', '".pg_escape_string($value['LGTYPE_ID'])."', '".pg_escape_string($value['TYPENAME'])."', '".pg_escape_string($value['TYPE_CATEGORY'])."', '".pg_escape_string($value['STATUTE'])."', '".pg_escape_string($value['LGSTATUS_ID'])."', '".pg_escape_string($value['DESCRIPTION'])."', '".pg_escape_string($value['URL'])."', '".pg_escape_string($value['PREV_NAME'])."' );";
+    $sql ="INSERT INTO bounds.limlevy VALUES ('".$incr."', '".$value['LG_ID']."', '".$value['SUBDIST_NUM']."', '".$value['BUDGET_YEAR']."', '".$value['COUNTY']."', '".$value['ASSESSED_VALUE']."', '".$value['TOTAL_LEVY']."' );";
 
    $ret = pg_query($db, $sql);
    if(!$ret){
       echo pg_last_error($db);
    } else {
       //echo "Record created successfully\n";
-      //echo $value['LG_ID']." ";
    }
 
 }
