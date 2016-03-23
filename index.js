@@ -23,6 +23,12 @@ mkdirp('db', function(err) {
 });
 
 
+// docker pull royhobbstn/co_cron
+// docker run --name nodecron -v /tmp/key:/root royhobbstn/co_cron
+
+
+/* DOLA DATABASE BACKUP (requires .pgpass installed, and google api key + instance permissions) */
+
 function getTimeStamp() {
     var now = new Date();
     return ((now.getMonth() + 1) + '-' +
@@ -39,16 +45,20 @@ function getTimeStamp() {
 
 var thisrun=getTimeStamp();
 
-//pg_dump test
-exec('pg_dump -Fc -h 104.197.26.248 -U postgres -w -p 5433 -d dola > db/dola' + thisrun + '.custom', {}, function (error, stdout, stderr) {
+//pg_dump dola database
+var dola = schedule.scheduleJob('5 22 * * 0', function(){
+  exec('pg_dump -Fc -h 104.197.26.248 -U postgres -w -p 5433 -d dola > db/dola' + thisrun + '.custom', {}, function (error, stdout, stderr) {
     console.log('--db-dump--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
     db_bucket.upload('db/dola' + thisrun + '.custom', function(err, file) {if (!err) { console.log('success uploading db/dola' + thisrun + '.custom'); } else {console.log(err); } });
-});
+    });
+});  
 
+
+/* SPECIAL DISTRICTs (requires google api key + instance permissions) */
 
 //metro districts
-var a = schedule.scheduleJob('* * * * *', function(){
+var metro = schedule.scheduleJob('10 22 * * 0', function(){
     var command="pgsql2shp -f data/dlmetro -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='6';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--metro--');
@@ -58,9 +68,8 @@ var a = schedule.scheduleJob('* * * * *', function(){
     });
 });  
 
-
 //park districts
-var b = schedule.scheduleJob('* * * * *', function(){
+var park = schedule.scheduleJob('12 22 * * 0', function(){
     var command="pgsql2shp -f data/dlpark -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='7';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--park--');
@@ -69,77 +78,92 @@ var b = schedule.scheduleJob('* * * * *', function(){
     data_bucket.upload('data/dlpark.zip', function(err, file) {if (!err) { console.log('success uploading data/dlpark.zip'); } else {console.log(err); } });      
     });
 });
-/*
+
 //fire districts
-var c = schedule.scheduleJob('* * * * *', function(){
+var fire = schedule.scheduleJob('14 22 * * 0', function(){
     var command="pgsql2shp -f data/dlfire -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='8';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--fire--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
     execSync("zip -o data/dlfire.zip data/dlfire.dbf data/dlfire.prj data/dlfire.shp data/dlfire.shx");  
+    data_bucket.upload('data/dlfire.zip', function(err, file) {if (!err) { console.log('success uploading data/dlfire.zip'); } else {console.log(err); } });
     });
 });
 
 //hospital districts
-var d = schedule.scheduleJob('* * * * *', function(){
+var hospital = schedule.scheduleJob('16 22 * * 0', function(){
     var command="pgsql2shp -f data/dlhospital -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='9';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--hospital--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o data/dlhospital.zip data/dlhospital.dbf data/dlhospital.prj data/dlhospital.shp data/dlhospital.shx");   
+    execSync("zip -o data/dlhospital.zip data/dlhospital.dbf data/dlhospital.prj data/dlhospital.shp data/dlhospital.shx");
+    data_bucket.upload('data/dlhospital.zip', function(err, file) {if (!err) { console.log('success uploading data/dlhospital.zip'); } else {console.log(err); } });  
     });
 });
 
 //water and sanitation districts
-var e = schedule.scheduleJob('* * * * *', function(){
+var watsan = schedule.scheduleJob('18 22 * * 0', function(){
     var command="pgsql2shp -f data/dlwatersan -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='10' or lgtypeid='11' or lgtypeid='12';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--wat-san--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o zip data/dlwatersan.zip data/dlwatersan.dbf data/dlwatersan.prj data/dlwatersan.shp data/dlwatersan.shx");    
+    execSync("zip -o zip data/dlwatersan.zip data/dlwatersan.dbf data/dlwatersan.prj data/dlwatersan.shp data/dlwatersan.shx");
+    data_bucket.upload('data/dlwatersan.zip', function(err, file) {if (!err) { console.log('success uploading data/dlwatersan.zip'); } else {console.log(err); } });  
     });
 });
 
 //library districts
-var f = schedule.scheduleJob('* * * * *', function(){
+var library = schedule.scheduleJob('20 22 * * 0', function(){
     var command="pgsql2shp -f data/dllibrary -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='16';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--library--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o data/dllibrary.zip data/dllibrary.dbf data/dllibrary.prj data/dllibrary.shp data/dllibrary.shx"); 
+    execSync("zip -o data/dllibrary.zip data/dllibrary.dbf data/dllibrary.prj data/dllibrary.shp data/dllibrary.shx");
+    data_bucket.upload('data/dllibrary.zip', function(err, file) {if (!err) { console.log('success uploading data/dllibrary.zip'); } else {console.log(err); } });  
     });
 });
 
 //school districts
-var g = schedule.scheduleJob('* * * * *', function(){
+var school = schedule.scheduleJob('22 22 * * 0', function(){
     var command="pgsql2shp -f data/dlschool -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='99';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--school--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o data/dlschool.zip data/dlschool.dbf data/dlschool.prj data/dlschool.shp data/dlschool.shx"); 
+    execSync("zip -o data/dlschool.zip data/dlschool.dbf data/dlschool.prj data/dlschool.shp data/dlschool.shx");
+    data_bucket.upload('data/dlschool.zip', function(err, file) {if (!err) { console.log('success uploading data/dlschool.zip'); } else {console.log(err); } });  
     });
 });
 
 //soil districts
-var h = schedule.scheduleJob('* * * * *', function(){
+var soil = schedule.scheduleJob('24 22 * * 0', function(){
     var command="pgsql2shp -f data/dlsoil -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='20';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--soil--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o data/dlsoil.zip data/dlsoil.dbf data/dlsoil.prj data/dlsoil.shp data/dlsoil.shx");   
+    execSync("zip -o data/dlsoil.zip data/dlsoil.dbf data/dlsoil.prj data/dlsoil.shp data/dlsoil.shx");
+    data_bucket.upload('data/dlsoil.zip', function(err, file) {if (!err) { console.log('success uploading data/dlsoil.zip'); } else {console.log(err); } });  
     });
 });
 
 //cemetary districts
-var i = schedule.scheduleJob('* * * * *', function(){
+var cemetary = schedule.scheduleJob('26 22 * * 0', function(){
     var command="pgsql2shp -f data/dlcemetary -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='15';\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--cemetary--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o data/dlcemetary.zip data/dlcemetary.dbf data/dlcemetary.prj data/dlcemetary.shp data/dlcemetary.shx");    
+    execSync("zip -o data/dlcemetary.zip data/dlcemetary.dbf data/dlcemetary.prj data/dlcemetary.shp data/dlcemetary.shx");
+    data_bucket.upload('data/dlcemetary.zip', function(err, file) {if (!err) { console.log('success uploading data/dlcemetary.zip'); } else {console.log(err); } });
     });
 });
 
 //all districts
-var j = schedule.scheduleJob('* * * * *', function(){
+var all = schedule.scheduleJob('28 22 * * 0', function(){
     var command="pgsql2shp -f data/dlall -h 54.69.15.55 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic;\" ";
     exec(command, {}, function (error, stdout, stderr) {
+    console.log('--all-districts--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("zip -o data/dlall.zip data/dlall.dbf data/dlall.prj data/dlall.shp data/dlall.shx");    
+    execSync("zip -o data/dlall.zip data/dlall.dbf data/dlall.prj data/dlall.shp data/dlall.shx");
+    data_bucket.upload('data/dlall.zip', function(err, file) {if (!err) { console.log('success uploading data/dlall.zip'); } else {console.log(err); } });  
     });
 });
-*/
 
