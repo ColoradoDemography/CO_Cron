@@ -75,7 +75,7 @@ for($i=0;$i<count($geopts);$i=$i+1){  //count($geopts);$i=$i+1){
   
   $countofgrants=0;
   
-print_r($geopts[$i]['lgid']." : ");
+//print_r($geopts[$i]['lgid']." : ");
   //push to these arrays
   $eiaf = [];
   $game = [];

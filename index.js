@@ -167,3 +167,72 @@ var all = schedule.scheduleJob('28 22 * * 0', function(){
     });
 });
 
+
+/* LOAD FROM ORACLE-EXPORTED JSON (requires .pgpass installed) */
+
+//load_lg2cnty
+var lg2cnty = schedule.scheduleJob('30 22 * * 0', function(){
+    var command="php php/load_lg2cnty.php";
+    exec(command, {}, function (error, stdout, stderr) {
+    console.log('--lg2cnty--');
+    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+    });
+});  
+
+//load_lgbasic
+var lgbasic = schedule.scheduleJob('32 22 * * 0', function(){
+    var command="php php/load_lgbasic.php";
+    exec(command, {}, function (error, stdout, stderr) {
+    console.log('--lgbasic--');
+    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+    });
+});  
+
+//load_lginfo
+var lginfo = schedule.scheduleJob('34 22 * * 0', function(){
+    var command="php php/load_lginfo.php";
+    exec(command, {}, function (error, stdout, stderr) {
+    console.log('--lginfo--');
+    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+    });
+});  
+
+//load_limlevy
+var limlevy = schedule.scheduleJob('36 22 * * 0', function(){
+    var command="php php/load_limlevy.php";
+    exec(command, {}, function (error, stdout, stderr) {
+    console.log('--limlevy--');
+    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+    });
+});  
+
+
+
+/* Prepare FS Grants Data Pipeline (requires .pgpass installed, and google api key + instance permissions) */
+
+//create geopts.json & sumtotal.geojson
+var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){
+    var command="php php/fs_shapes.php";
+    exec(command, {}, function (error, stdout, stderr) {
+    console.log('--fs-grants--');
+    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+    execSync("php php/fs_data.php");
+    data_bucket.upload('php/geopts.json', function(err, file) {if (!err) { console.log('success uploading php/geopts.json'); } else {console.log(err); } });        
+    data_bucket.upload('php/sumtotal.geojson', function(err, file) {if (!err) { console.log('success uploading php/sumtotal.geojson'); } else {console.log(err); } });          
+    });
+});  
+
+
+
+/* BLS Data Pipeline (requires google api key + instance permissions) */
+
+//in the future, enable some failsafes so that counties_all can be used for entire USA coverage
+
+var bls = schedule.scheduleJob('50 22 * * 0', function(){
+    var command="php bls/bls.php";
+    exec(command, {}, function (error, stdout, stderr) {
+    console.log('--bls--');
+    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+    data_bucket.upload('bls/json/08_bls.json', function(err, file) {if (!err) { console.log('success uploading bls/json/08_bls.json'); } else {console.log(err); } });        
+    });
+});
