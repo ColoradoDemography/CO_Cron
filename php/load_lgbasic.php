@@ -15,7 +15,7 @@ $dbname = "dbname=dola";
 $credentials = "user=postgres";
 
 
-$str = file_get_contents('http://dola.colorado.gov/gis-tmp/lgbasic.json');
+$str = file_get_contents('https://dola.colorado.gov/gis-tmp/lgbasic.json');
 
 $json = json_decode($str, true); // decode the JSON into an associative array
 

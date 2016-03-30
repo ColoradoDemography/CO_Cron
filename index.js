@@ -24,7 +24,7 @@ mkdirp('db', function(err) {
 
 
 // docker pull royhobbstn/co_cron
-// docker run --name nodecron -v /tmp/key:/root royhobbstn/co_cron
+// docker run --name nodecron -v /gcp:/root royhobbstn/co_cron
 
 
 /* DOLA DATABASE BACKUP (requires .pgpass installed, and google api key + instance permissions) */

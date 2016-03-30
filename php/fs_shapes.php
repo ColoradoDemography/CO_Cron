@@ -17,11 +17,11 @@ $mastershapes = []; //master data obj (convert to json and save to file)
 require 'counties.php';
 
 
-$str = file_get_contents('http://dola.colorado.gov/gis-tmp/lgbasic.json');
+$str = file_get_contents('https://dola.colorado.gov/gis-tmp/lgbasic.json');
 $lgbasic = json_decode($str, true); // decode the JSON into an competitive associative array
 
 
-$str2 = file_get_contents('lgid_place_crosswalk.json');
+$str2 = file_get_contents('./lgid_place_crosswalk.json');
 $json2 = json_decode($str2, true); // decode the JSON into an formulaic associative array
 
 

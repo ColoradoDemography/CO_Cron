@@ -19,13 +19,13 @@ $credentials = "user=postgres";
 $master = []; //master data obj (convert to json and save to file)
 
 //'http://dola.colorado.gov/gis-tmp/geopts.json' or GIS SERVER
-$georaw = file_get_contents('geopts.json');
+$georaw = file_get_contents('./geopts.json');
 $geopts = json_decode($georaw, true); // decode the JSON into an formulaic associative array
 
-$csbgraw = file_get_contents('csbg_pts.json');
+$csbgraw = file_get_contents('./csbg_pts.json');
 $csbgpts = json_decode($csbgraw, true); 
 
-$keyraw = file_get_contents('csbg_key.json');
+$keyraw = file_get_contents('./csbg_key.json');
 $csbgkey = json_decode($keyraw, true); 
 
 for($ii=0;$ii<count($csbgpts);$ii=$ii+1){
@@ -35,8 +35,8 @@ for($ii=0;$ii<count($csbgpts);$ii=$ii+1){
 }
 
 
-$str = file_get_contents('http://dola.colorado.gov/gis-tmp/competitive.json');
-$str2 = file_get_contents('http://dola.colorado.gov/gis-tmp/formulaic.json');
+$str = file_get_contents('https://dola.colorado.gov/gis-tmp/competitive.json');
+$str2 = file_get_contents('https://dola.colorado.gov/gis-tmp/formulaic.json');
 
 $json = json_decode($str, true); // decode the JSON into an competitive associative array
 $json2 = json_decode($str2, true); // decode the JSON into an formulaic associative array

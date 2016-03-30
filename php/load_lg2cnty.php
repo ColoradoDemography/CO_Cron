@@ -14,7 +14,7 @@ $port = "port=5433";
 $dbname = "dbname=dola";
 $credentials = "user=postgres";
 
-$str = file_get_contents('http://dola.colorado.gov/gis-tmp/lg2cnty.json');
+$str = file_get_contents('https://dola.colorado.gov/gis-tmp/lg2cnty.json');
 
 $json = json_decode($str, true); // decode the JSON into an associative array
 
