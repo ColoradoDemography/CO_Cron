@@ -9,7 +9,8 @@ $host = "host=gis.dola.colorado.gov";
 $port = "port=5433";
 $dbname = "dbname=dola";
 $credentials = "user=postgres";
-$pwrd = "";
+
+require "/root/pg.php";
 
 $mastershapes = []; //master data obj (convert to json and save to file)
 
@@ -33,7 +34,7 @@ $csbgkey = json_decode($keyraw, true);
 
 
 // attempt a connection 
-$dbh = pg_connect("$host $port $dbname $credentials $pwrd");
+$dbh = pg_connect("$host $port $dbname $credentials $password");
 
 if (!$dbh) {
     die("Error in connection: " . pg_last_error());
