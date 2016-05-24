@@ -1,15 +1,15 @@
 <?php
 //creates geopts.json
-//from inputs: special districts, munibounds (on GIS Server - dynamic), ad counties.php (local - static)
+//from inputs: special districts, munibounds (on GIS Server - dynamic), and counties.php (local - static)
 //result contains: coordinates (x,y) - usually centroid (except for counties), and bounding box coords "x1,y1,x2,y2"
 //plus attributes: lgid, fips, lgname, lgtype, lgstatus
 
 //gis server connection string
-$host = "host=104.197.26.248";
+$host = "host=gis.dola.colorado.gov";
 $port = "port=5433";
 $dbname = "dbname=dola";
 $credentials = "user=postgres";
-
+$pwrd = "";
 
 $mastershapes = []; //master data obj (convert to json and save to file)
 
@@ -21,12 +21,19 @@ $str = file_get_contents('https://dola.colorado.gov/gis-tmp/lgbasic.json');
 $lgbasic = json_decode($str, true); // decode the JSON into an competitive associative array
 
 
-$str2 = file_get_contents('./lgid_place_crosswalk.json');
+$str2 = file_get_contents('php/lgid_place_crosswalk.json');
 $json2 = json_decode($str2, true); // decode the JSON into an formulaic associative array
+
+// havent figured out what to do with this yet
+$csbgraw = file_get_contents('php/csbg_pts.json');
+$csbgpts = json_decode($csbgraw, true); 
+$keyraw = file_get_contents('php/csbg_key.json');
+$csbgkey = json_decode($keyraw, true); 
+
 
 
 // attempt a connection 
-$dbh = pg_connect("$host $port $dbname $credentials");
+$dbh = pg_connect("$host $port $dbname $credentials $pwrd");
 
 if (!$dbh) {
     die("Error in connection: " . pg_last_error());

@@ -9,7 +9,7 @@
 
 
 //gis server connection string
-$host = "host=104.197.26.248";
+$host = "host=gis.dola.colorado.gov";
 $port = "port=5433";
 $dbname = "dbname=dola";
 $credentials = "user=postgres";

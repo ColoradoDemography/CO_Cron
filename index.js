@@ -48,7 +48,7 @@ function getTimeStamp() {
 //pg_dump dola database
 var dola = schedule.scheduleJob('5 22 * * 0', function(){
   var thisrun=getTimeStamp();
-  exec('pg_dump -Fc -h 104.197.26.248 -U postgres -w -p 5433 -d dola > db/dola' + thisrun + '.custom', {}, function (error, stdout, stderr) {
+  exec('pg_dump -Fc -h gis.dola.colorado.gov -U postgres -w -p 5433 -d dola > db/dola' + thisrun + '.custom', {}, function (error, stdout, stderr) {
     console.log('--db-dump--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
     db_bucket.upload('db/dola' + thisrun + '.custom', function(err, file) {if (!err) { console.log('success uploading db/dola' + thisrun + '.custom'); } else {console.log(err); } });
@@ -60,7 +60,7 @@ var dola = schedule.scheduleJob('5 22 * * 0', function(){
 
 //metro districts
 var metro = schedule.scheduleJob('10 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlmetro -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='6';\" ";
+    var command="pgsql2shp -f data/dlmetro -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='6';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--metro--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -71,7 +71,7 @@ var metro = schedule.scheduleJob('10 22 * * 0', function(){
 
 //park districts
 var park = schedule.scheduleJob('12 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlpark -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='7';\" ";
+    var command="pgsql2shp -f data/dlpark -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='7';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--park--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -82,7 +82,7 @@ var park = schedule.scheduleJob('12 22 * * 0', function(){
 
 //fire districts
 var fire = schedule.scheduleJob('14 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlfire -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='8';\" ";
+    var command="pgsql2shp -f data/dlfire -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='8';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--fire--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -93,7 +93,7 @@ var fire = schedule.scheduleJob('14 22 * * 0', function(){
 
 //hospital districts
 var hospital = schedule.scheduleJob('16 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlhospital -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='9';\" ";
+    var command="pgsql2shp -f data/dlhospital -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='9';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--hospital--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -104,7 +104,7 @@ var hospital = schedule.scheduleJob('16 22 * * 0', function(){
 
 //water and sanitation districts
 var watsan = schedule.scheduleJob('18 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlwatersan -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='10' or lgtypeid='11' or lgtypeid='12';\" ";
+    var command="pgsql2shp -f data/dlwatersan -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='10' or lgtypeid='11' or lgtypeid='12';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--wat-san--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -115,7 +115,7 @@ var watsan = schedule.scheduleJob('18 22 * * 0', function(){
 
 //library districts
 var library = schedule.scheduleJob('20 22 * * 0', function(){
-    var command="pgsql2shp -f data/dllibrary -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='16';\" ";
+    var command="pgsql2shp -f data/dllibrary -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='16';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--library--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -126,7 +126,7 @@ var library = schedule.scheduleJob('20 22 * * 0', function(){
 
 //school districts
 var school = schedule.scheduleJob('22 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlschool -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='99';\" ";
+    var command="pgsql2shp -f data/dlschool -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='99';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--school--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -137,7 +137,7 @@ var school = schedule.scheduleJob('22 22 * * 0', function(){
 
 //soil districts
 var soil = schedule.scheduleJob('24 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlsoil -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='20';\" ";
+    var command="pgsql2shp -f data/dlsoil -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='20';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--soil--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -148,7 +148,7 @@ var soil = schedule.scheduleJob('24 22 * * 0', function(){
 
 //cemetary districts
 var cemetary = schedule.scheduleJob('26 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlcemetary -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='15';\" ";
+    var command="pgsql2shp -f data/dlcemetary -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic where lgtypeid='15';\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--cemetary--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -159,7 +159,7 @@ var cemetary = schedule.scheduleJob('26 22 * * 0', function(){
 
 //all districts
 var all = schedule.scheduleJob('28 22 * * 0', function(){
-    var command="pgsql2shp -f data/dlall -h 104.197.26.248 -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic;\" ";
+    var command="pgsql2shp -f data/dlall -h gis.dola.colorado.gov -u codemog -P demography dola \"select lgid,source,geom,lgname,lgtypeid,lgstatusid,abbrev_name,mail_address,alt_address,mail_city,mail_state,mail_zip,url,prev_name from dola.bounds.districts natural join dola.bounds.lgbasic;\" ";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--all-districts--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
@@ -211,17 +211,7 @@ var limlevy = schedule.scheduleJob('36 22 * * 0', function(){
 
 /* Prepare FS Grants Data Pipeline (requires .pgpass installed, and google api key + instance permissions) */
 
-//create geopts.json & sumtotal.geojson
-var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){
-    var command="php php/fs_shapes.php";
-    exec(command, {}, function (error, stdout, stderr) {
-    console.log('--fs-grants--');
-    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("php php/fs_data.php");
-    data_bucket.upload('php/geopts.json', function(err, file) {if (!err) { console.log('success uploading php/geopts.json'); } else {console.log(err); } });        
-    data_bucket.upload('php/sumtotal.geojson', function(err, file) {if (!err) { console.log('success uploading php/sumtotal.geojson'); } else {console.log(err); } });          
-    });
-});  
+-
 
 
 
