@@ -211,24 +211,23 @@ var limlevy = schedule.scheduleJob('36 22 * * 0', function(){
 
 /* Prepare FS Grants Data Pipeline (requires .pgpass installed, and google api key + instance permissions) */
 
-//create geopts.json & sumtotal.geojson
+//create geopts.json 
 var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){
     var command="php php/fs_shapes.php";
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--fs-grants--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    execSync("php php/fs_data.php");
-    data_bucket.upload('php/geopts.json', function(err, file) {if (!err) { console.log('success uploading php/geopts.json'); } else {console.log(err); } });        
-//    data_bucket.upload('php/sumtotal.geojson', function(err, file) {if (!err) { console.log('success uploading php/sumtotal.geojson'); } else {console.log(err); } });          
+    data_bucket.upload('geopts.json', function(err, file) {if (!err) { console.log('success uploading geopts.json'); } else {console.log(err); } });        
     });
 });  
 
-//create geopts.json & sumtotal.geojson
+
+//create grantpts.csv for CO_Grants Application
 var csvpts = schedule.scheduleJob('40 22 * * 0', function(){
     var command="node csv.js";
     exec(command, {}, function (error, stdout, stderr) {
-    console.log('--cogrants--csv-pts--');
-    console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
+      console.log('--cogrants--started--');
+      console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
     });
 });  
 

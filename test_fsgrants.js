@@ -27,8 +27,7 @@ var data_bucket = gcs.bucket('co-publicdata');
     exec(command, {}, function (error, stdout, stderr) {
       console.log('--fs-grants--');
       console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-      execSync("php php/fs_data.php");
-      data_bucket.upload('php/geopts.json', function(err, file) {if (!err) { console.log('success uploading php/geopts.json'); } else {console.log(err); } });        
+      data_bucket.upload('geopts.json', function(err, file) {if (!err) { console.log('success uploading geopts.json'); } else {console.log(err); } });        
     });
 
 
