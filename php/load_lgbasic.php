@@ -14,13 +14,14 @@ $port = "port=5433";
 $dbname = "dbname=dola";
 $credentials = "user=postgres";
 
+require "/root/pg.php";
 
 $str = file_get_contents('https://dola.colorado.gov/gis-tmp/lgbasic.json');
 
 $json = json_decode($str, true); // decode the JSON into an associative array
 
 
-   $db = pg_connect( "$host $port $dbname $credentials"  );
+   $db = pg_connect( "$host $port $dbname $credentials $password"  );
    if(!$db){
       echo "Error : Unable to open database\n";
    } else {
