@@ -27,7 +27,8 @@ $json = json_decode($str, true); // decode the JSON into an associative array
    } else {
       echo "Opened database successfully\n";
    }
-   
+
+
    $sql =<<<EOF
      DROP TABLE IF EXISTS bounds.lg2cnty;
      
@@ -74,7 +75,7 @@ foreach ($json as $value) {
    if(!$ret){
       echo pg_last_error($db);
    } else {
-      // echo "Record created successfully\n";
+      //echo "Record created successfully\n";
    }
 
 }

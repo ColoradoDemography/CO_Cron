@@ -21,14 +21,15 @@ $str = file_get_contents('https://dola.colorado.gov/gis-tmp/lginfo.json');
 $json = json_decode($str, true); // decode the JSON into an associative array
 
 
-   $db = pg_connect( "$host $port $dbname $credentials $passsword"  );
+   $db = pg_connect( "$host $port $dbname $credentials $password"  );
    if(!$db){
       echo "Error : Unable to open database\n";
    } else {
       echo "Opened database successfully\n";
    }
-   
-   $sql =<<<EOF
+
+
+$sql =<<<EOF
      DROP TABLE IF EXISTS bounds.lginfo;
      
      CREATE TABLE bounds.lginfo

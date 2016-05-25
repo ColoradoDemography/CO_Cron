@@ -7,7 +7,7 @@
 
 // To update table in GIS server, run from anywhere.
 
-
+//gis.dola.colorado.gov
 //gis server connection string
 $host = "host=gis.dola.colorado.gov";
 $port = "port=5433";
