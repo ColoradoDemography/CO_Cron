@@ -10,7 +10,7 @@ $port = "port=5433";
 $dbname = "dbname=dola";
 $credentials = "user=postgres";
 
-require "/root/pg.php";
+//require "/root/pg.php";
 
 $mastershapes = []; //master data obj (convert to json and save to file)
 
@@ -28,13 +28,10 @@ $json2 = json_decode($str2, true); // decode the JSON into an formulaic associat
 // havent figured out what to do with this yet
 $csbgraw = file_get_contents('php/csbg_pts.json');
 $csbgpts = json_decode($csbgraw, true); 
-$keyraw = file_get_contents('php/csbg_key.json');
-$csbgkey = json_decode($keyraw, true); 
-
 
 
 // attempt a connection 
-$dbh = pg_connect("$host $port $dbname $credentials $password");
+$dbh = pg_connect("$host $port $dbname $credentials");
 
 if (!$dbh) {
     die("Error in connection: " . pg_last_error());
@@ -166,6 +163,12 @@ for($j=0;$j<count($lgbasic);$j=$j+1){
 for($i=0;$i<count($c_counties);$i=$i+1){
   array_push($mastershapes, $c_counties[$i]);
 }
+
+//Loop through $csbgpts - add to $mastershapes
+for($j=0;$j<count($csbgpts);$j=$j+1){
+  array_push($mastershapes, $csbgpts[$j]);
+}
+
 
 $fp = fopen('geopts.json', 'w');
 fwrite($fp, json_encode($mastershapes));

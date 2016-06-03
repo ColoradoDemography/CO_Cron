@@ -1,4 +1,5 @@
-[{ "agency" : "Adams County Office Of Community Development", "lgid" : "01001", "served" : "Adams"},
+[
+  { "agency" : "Adams County Office Of Community Development", "lgid" : "01001", "served" : "Adams"},
 { "agency" : "Araphoe County Community Services, Homemaker Division", "lgid" : "03001", "served" : "Arapahoe"},
 { "agency" : "Baca County Commissioners Office", "lgid" : "05001", "served" : "Baca"},
 { "agency" : "Bent County Department Of Social Services", "lgid" : "06001", "served" : "Bent"},

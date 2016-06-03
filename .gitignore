@@ -1,10 +1,12 @@
-php/geopts.json
+geopts.json
 .pgpass
 dola-gis-server-f143cd56dce3.json
 root
-grantpts.csv
+*.csv
 root/pg.php
 pg.php
+data
+db
 
 # Logs
 logs

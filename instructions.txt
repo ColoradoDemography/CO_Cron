@@ -1,0 +1,49 @@
+<?php
+//creates geopts.json
+//from inputs: special districts, munibounds (on GIS Server - dynamic), and counties.php (local - static)
+//result contains: coordinates (x,y) - usually centroid (except for counties), and bounding box coords "x1,y1,x2,y2"
+//plus attributes: lgid, fips, lgname, lgtype, lgstatus
+
+// ## Postgres connection info
+
+$mastershapes = []; //master data obj (convert to json and save to file)
+
+# get counties.php
+# get lgbasic.json
+# get lgid_place_crosswalk.json
+# get php/csbg_pts.json
+# get php/csbg_key.json
+
+// ## connect to database 
+
+// # query districts layer
+$tablesql="SELECT lgid, ST_AsGeoJSON(st_transform(ST_Centroid(" . pg_escape_string('geom') . "),4326)) as centroid, ST_AsGeoJSON(st_transform(ST_Envelope(" . pg_escape_string('geom') . "),4326)) as bbox FROM bounds.districts;";
+
+// # loop through result of query
+// # create coordinates object
+// # create bbox object
+
+// # join with information in lgbasic on lgid field
+// # To the $mastershapes  array, add new objects with 'lgid','fips','lgname','lgtype','lgstatus','bbox','coordinates'   //fips doesnt matter
+
+
+// # query muni layer
+$t="SELECT city, first_city, ST_AsGeoJSON(st_transform(ST_Centroid(" . pg_escape_string('geom') . "),4326)) as centroid, ST_AsGeoJSON(st_transform(ST_Envelope(" . pg_escape_string('geom') . "),4326)) as bbox FROM bounds.munibounds;";
+
+// # loop through result of query
+// # create coordinates object
+// # create bbox object
+
+// # join with information in lgbasic on lgid field
+// # To the $mastershapes  array, add new objects with 'lgid','fips','lgname','lgtype','lgstatus','bbox','coordinates'   //fips doesnt matter
+
+
+// # Loop through $c_counties - add to directly to $mastershapes
+
+// # loop through csbg_key add directly to $mastershapes
+
+// # save geopts file
+// # upload to google storage?
+
+
+?>
