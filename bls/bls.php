@@ -97,7 +97,7 @@ $url = 'http://api.bls.gov/publicAPI/v2/timeseries/data/';
                 'seriesid'  => $geo,
                 'startyear' => $startyear,
                 'endyear'   => $endyear,
-                'registrationKey' => "33ae9d73336c448eb9294aea6f311df5",  //GET YOUR OWN KEY
+                'registrationKey' => "814be857c9044e63a60d622ad1368a9e",  //GET YOUR OWN KEY
                 'annualaverage' => true
         );
         $pd = json_encode($query);

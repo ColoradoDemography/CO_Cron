@@ -9,6 +9,6 @@ module.exports = function(data_bucket){
     exec(command, {}, function (error, stdout, stderr) {
     console.log('--bls--');
     console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);
-    data_bucket.upload('bls/json/08_bls.json', function(err, file) {if (!err) { console.log('success uploading bls/json/08_bls.json'); } else {console.log(err); } });        
+    data_bucket.upload('json/08_bls.json', function(err, file) {if (!err) { console.log('success uploading json/08_bls.json'); } else {console.log(err); } });        
     });
 }

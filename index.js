@@ -25,7 +25,7 @@ var grants_data_pipeline = require('./modules/grants_data_pipeline.js');
 var dola_data_upload = require('./modules/dola_data_upload.js');
 
 //temp test tasks
-grants_data_pipeline.csvpts(data_bucket);
+//bls_data_pipeline(data_bucket);
 
 
 /*  SCHEDULED TASKS  */
