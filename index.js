@@ -1,5 +1,5 @@
-// docker pull royhobbstn/co_cron
-// docker run --name nodecron -v /gcp:/root royhobbstn/co_cron
+// docker pull codemog/co_cron
+//docker run --name nodecron -d -v /gcp:/root codemog/co_cron
 
 var schedule = require('node-schedule');
 var mkdirp = require('mkdirp');
@@ -23,6 +23,7 @@ var dump_dola_database = require('./modules/dump_database.js');
 var bls_data_pipeline = require('./modules/bls_data_pipeline.js');
 var grants_data_pipeline = require('./modules/grants_data_pipeline.js');
 var dola_data_upload = require('./modules/dola_data_upload.js');
+var grants_export = require('./modules/grants_export.js');
 
 //temp test tasks
 //bls_data_pipeline(data_bucket);
@@ -56,5 +57,19 @@ var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){ grants_data_pipel
 var csvpts = schedule.scheduleJob('40 22 * * 0', function(){ grants_data_pipeline.csvpts(data_bucket); });  
 
 /* BLS Data Pipeline */
-var bls = schedule.scheduleJob('50 22 * * 0', function(){ bls_data_pipeline(data_bucket); });
+var bls = schedule.scheduleJob('42 22 * * 0', function(){ bls_data_pipeline(data_bucket); });
 
+/* Grant Program Exports */
+var fml = schedule.scheduleJob('44 22 * * 0', function(){ grants_export('FML'); });  
+var sev_dist = schedule.scheduleJob('45 22 * * 0', function(){ grants_export('SEV_DIST'); });
+var vfp = schedule.scheduleJob('46 22 * * 0', function(){ grants_export('VFP'); });
+var ctf = schedule.scheduleJob('47 22 * * 0', function(){ grants_export('CTF'); });
+var sar = schedule.scheduleJob('48 22 * * 0', function(){ grants_export('SAR'); });
+var ffb = schedule.scheduleJob('49 22 * * 0', function(){ grants_export('FFB'); });
+var eiaf = schedule.scheduleJob('50 22 * * 0', function(){ grants_export('EIAF'); });
+var game = schedule.scheduleJob('51 22 * * 0', function(){ grants_export('GAME'); });
+var redi = schedule.scheduleJob('52 22 * * 0', function(){ grants_export('REDI'); });
+var dr = schedule.scheduleJob('53 22 * * 0', function(){ grants_export('DR'); });
+var csbg = schedule.scheduleJob('54 22 * * 0', function(){ grants_export('CSBG'); });
+var cdbg = schedule.scheduleJob('55 22 * * 0', function(){ grants_export('CDBG'); });
+var all = schedule.scheduleJob('56 22 * * 0', function(){ grants_export('FML,SEV_DIST,VFP,CTF,SAR,FFB,EIAF,GAME,REDI,DR,CSBG,CDBG'); });
