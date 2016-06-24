@@ -8,7 +8,8 @@
 $host = "host=gis.dola.colorado.gov";
 $port = "port=5433";
 $dbname = "dbname=dola";
-$credentials = "user=postgres";
+$credentials = "user=codemog";
+$password = "password=demography"; //select only - not private
 
 //require "/root/pg.php";
 
@@ -31,7 +32,7 @@ $csbgpts = json_decode($csbgraw, true);
 
 
 // attempt a connection 
-$dbh = pg_connect("$host $port $dbname $credentials");
+$dbh = pg_connect("$host $port $dbname $credentials $password");
 
 if (!$dbh) {
     die("Error in connection: " . pg_last_error());

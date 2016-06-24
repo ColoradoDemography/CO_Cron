@@ -21,7 +21,7 @@ var gcs = gcloud.storage({
 var data_bucket = gcs.bucket('co-publicdata');
 
 //create grantpts.csv for CO_Grants Application
-    var command="node csv.js";
+    var command="node js/csv.js";
     exec(command, {}, function (error, stdout, stderr) {
       console.log('--cogrants--started--');
       console.log('error: ' + error); console.log('stdout: ' + stdout); console.log('stderr: ' + stderr);

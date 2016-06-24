@@ -37,6 +37,8 @@
 { "agency" : "Summit County Senior Services", "lgid" : "X00008", "served" : "Summit"},
 { "agency" : "Teller Senior Coalition", "lgid" : "X00009", "served" : "Teller"},
 { "agency" : "Upper Arkansas Area Council Of Governments", "lgid" : "X00010", "served" : "Chaffee, Custer, Fremont and Lake"},
+{ "agency" : "Upper Arkansas Area Council of Governments", "lgid" : "X00010", "served" : "Chaffee, Custer, Fremont and Lake"},
+  
 { "agency" : "Weld County", "lgid" : "62056", "served" : "Weld"},
 {"agency":"Pikes Peak Area Council of Governments","lgid":"x00100"},
 {"agency":"Associated Governements of Northwest Colorado","lgid":"x00101"},
@@ -54,7 +56,7 @@
 {"agency":"Starkville, Town of","lgid":"36010"},
 {"agency":"Upper San Juan Hospital District","lgid":"64144"},
 {"agency":"Fremont County E-911 Authority","lgid":"x00110"},
-{"agency":"Upper Arkansas Area Council of Governments","lgid":"x00111"},
+
 {"agency":"Region 10 Legion","lgid":"x00112"},
 {"agency":"South Central Council of Governments","lgid":"x00113"},
 {"agency":"Denver Regional Council of Governments","lgid":"x00114"},
