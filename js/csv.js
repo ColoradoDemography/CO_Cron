@@ -31,7 +31,6 @@ var max_date = new Date();
 //all programs not listed below will be filtered out
 var program = ["CDBG","CSBG","DR","EIAF","GAME","REDI","CTF","FFB","FML","FML_SB106","SAR","SEV_DIST","VFP"];
 
-  
 
   //get raw competitve grants =competitve
 var promise1 = new Promise(function(resolve, reject) {
@@ -169,14 +168,12 @@ var promise2 = new Promise(function(resolve, reject) {
 //combine to common schema =grantscombined
 //wait for both promises to complete
 Promise.all([promise1, promise2]).then(function(values) {
+  
     console.log('promises resolved');
     var competitive = values[0];
     var formulaic = values[1];
 
-
     if ((competitive.length + formulaic.length) === 0) {
-        //console.log('null');
-        //no results
         res.send('no results');
         return;
     }
@@ -186,19 +183,14 @@ Promise.all([promise1, promise2]).then(function(values) {
   
     var allgrants = [];
 
-    var i;
   
-        var nullcount = 0;
-  
-    for (i = 0; i < competitive.length; i = i + 1) {
-
+    for (var i = 0; i < competitive.length; i = i + 1) {
 
       //if no LGID, try to match with one
       if(competitive[i].LG_ID==null){
-        nullcount++;
         competitive[i].LG_ID = assign_lgid(competitive[i].APPLICANT_TITLE);
       }
-      
+        
         allgrants.push({
             "LG_ID": competitive[i].LG_ID,
             "COUNTY": competitive[i].COUNTY,
@@ -220,9 +212,11 @@ Promise.all([promise1, promise2]).then(function(values) {
             "REGION_MANAGER": competitive[i].REGION_MANAGER,
             "FS_REGIONS": competitive[i].FS_REGIONS
         });
-    }
+
+    } //end competitive
 
     for (i = 0; i < formulaic.length; i = i + 1) {
+      
         allgrants.push({
             "LG_ID": formulaic[i].LG_ID,
             "COUNTY": formulaic[i].COUNTY,
@@ -244,14 +238,10 @@ Promise.all([promise1, promise2]).then(function(values) {
             "REGION_MANAGER": null,
             "FS_REGIONS": null
         });
+      
     }
 
-
-
     crunchfile(allgrants);
-
-    //splitgrants2counties(allgrants);
-
 
 });
 
@@ -329,97 +319,46 @@ function convertmonthtext(monthtext) {
 }
 
 
-//join with geo file 
+//extract only needed fields from main grantsfile and export as csv
 function crunchfile(result) {
 
-    console.log('joining with geo');
+    console.log('subset');
 
     var grantpts = [];
-    var keypts = [];
+     
 
-    request({
-        url: 'https://storage.googleapis.com/co-publicdata/geopts.json',
-        json: true
-    }, function(error, response, body) {
-
-
-        if (!error && response.statusCode === 200) {
-
-          
             for (var i = 0; i < result.length; i = i + 1) {
-                for (var j = 0; j < body.length; j = j + 1) {
-                  
-                    if (result[i].LG_ID === body[j].lgid) {
-                      
-//                       if(result[i].LG_ID[0] === "X" || result[i].LG_ID[0] === "x"){
-//                         console.log('pushed nonstandard: ' + result[i].LG_ID)
-//                       }
+
+              if(result[i].LG_ID){
+                
                         grantpts.push({
                             "award": result[i].AMT_AWARDED,
                             "projname": result[i].PROJECT_NAME,        
                             "projectnmbr": result[i].PROJECT_NMBR,
                             "dateofaward": result[i].DATE_OF_AWARD,       
-                            "lgid": body[j].lgid,
+                            "lgid": result[i].LG_ID,
                             "program": result[i].PROGRAM_TYPE
                         });  
-                      
-                      //create unique key for each lgid (taking into account "X" and "x" prefixes for non-lgids)
-                      var lgidkey = parseInt((body[j].lgid).replace("x", "88").replace("X", "99"));
-                      
-                        keypts[lgidkey] = {
-                            "lgid": body[j].lgid,
-                            "lgtype": body[j].lgtype,
-                            "latitude": Math.round(body[j].coordinates[1]*100)/100,
-                            "longitude": Math.round(body[j].coordinates[0]*100)/100,
-                            "govname": body[j].lgname
-                        }; //purposely imprecise javascript rounding above
-                      
-                     
-                      //order above stacked for hopefully optimal gzip compression
-                    }
-                  
-                  
-                  
-                } //end j
+              }
+
+
             } //end i
 
             var fields = ['award', 'projname', 'projectnmbr', 'dateofaward', 'lgid', 'program'];
-            var keyfields = ['lgid', 'lgtype', 'latitude', 'longitude', 'govname' ];
           
             json2csv({
                 data: grantpts,
                 fields: fields
             }, function(err, csv) {
                 if (err) console.log(err);
-                fs.writeFileSync('grantpts.csv', csv);
-                data_bucket.upload('grantpts.csv', { gzip: true }, function(err, file) {
+                fs.writeFileSync('grants.csv', csv);
+                data_bucket.upload('grants.csv', { gzip: true }, function(err, file) {
                     if (!err) {
-                        console.log('success uploading grantpts.csv');
+                        console.log('success uploading grants.csv');
                     } else {
                         console.log(err);
                     }
                 });
             });
-
-            json2csv({
-                data: keypts,
-                fields: keyfields
-            }, function(err, csv) {
-                if (err) console.log(err);
-                fs.writeFileSync('keypts.csv', csv);
-                data_bucket.upload('keypts.csv', { gzip: true }, function(err, file) {
-                    if (!err) {
-                        console.log('success uploading keypts.csv');
-                    } else {
-                        console.log(err);
-                    }
-                });
-            });
-          
-        }
-
-    });
-
-
 
 }
