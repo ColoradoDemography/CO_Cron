@@ -8,8 +8,7 @@ var fs = require('fs');
 var request = require('request');
 
 var pg = require('pg');
-var obj = JSON.parse(fs.readFileSync('connection.json', 'utf8'));
-var conString = "postgres://" + obj.name + ":" + obj.password + "@" + obj.host + ":" + obj.port + "/" + obj.db;
+var conString = "postgres://codemog:demography@gis.dola.colorado.gov:5433/dola";
 
 
 //data from lgbasic, lgid_place_crosswalk, csbg_pts, counties and 'districts' in DOLA database will be stored here
@@ -28,7 +27,7 @@ parray[0] = new Promise(function(resolve, reject) {
 
 
 parray[1] = new Promise(function(resolve, reject) {
-    fs.readFile('php/lgid_place_crosswalk.json', 'utf8', function(err, data) {
+    fs.readFile('json/lgid_place_crosswalk.json', 'utf8', function(err, data) {
         if (err) {
             reject(err);
         }
@@ -38,7 +37,7 @@ parray[1] = new Promise(function(resolve, reject) {
 
 
 parray[2] = new Promise(function(resolve, reject) {
-    fs.readFile('php/csbg_pts.json', 'utf8', function(err, data) {
+    fs.readFile('json/csbg_pts.json', 'utf8', function(err, data) {
         if (err) {
             reject(err);
         }
@@ -48,7 +47,7 @@ parray[2] = new Promise(function(resolve, reject) {
 
 
 parray[3] = new Promise(function(resolve, reject) {
-    fs.readFile('php/counties.json', 'utf8', function(err, data) {
+    fs.readFile('json/counties.json', 'utf8', function(err, data) {
         if (err) {
             reject(err);
         }

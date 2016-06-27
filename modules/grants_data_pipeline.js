@@ -3,8 +3,8 @@
 var exec = require('child_process').exec;
 
 //create geopts.json - for special districts map
-module.exports.fsgrants = function(data_bucket) {
-    var command = "php php/fs_shapes.php";
+module.exports.geopts = function(data_bucket) {
+    var command = "node js/geopts.js";
     exec(command, {}, function(error, stdout, stderr) {
         console.log('--fs-grants--');
         console.log('error: ' + error);
@@ -21,8 +21,8 @@ module.exports.fsgrants = function(data_bucket) {
 }
 
 //create grants.csv for CO_Grants Application
-module.exports.csvpts = function(data_bucket) {
-    var command = "node js/csv.js"; //save to bucket inherent in this script
+module.exports.grants = function(data_bucket) {
+    var command = "node js/grants.js"; //save to bucket inherent in this script
     exec(command, {}, function(error, stdout, stderr) {
         console.log('--csv-pts--');
         console.log('error: ' + error);

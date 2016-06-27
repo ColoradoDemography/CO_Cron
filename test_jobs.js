@@ -42,8 +42,8 @@ console.log('3: DOLA Data Upload lg2cnty');
 console.log('4: DOLA Data Upload lgbasic');
 console.log('5: DOLA Data Upload lginfo');
 console.log('6: DOLA Data Upload limlevy');
-console.log('7: Grants Pipeline fsgrants');
-console.log('8: Grants Pipeline csvpts');
+console.log('7: Grants Pipeline geopts');
+console.log('8: Grants Pipeline grants');
 console.log('9: Export Districts: dlmetro');
 console.log('10: Export Districts: dlpark');
 console.log('11: Export Districts: dlfire');
@@ -91,12 +91,12 @@ console.log('');
   
   if(answer==="7"){
   console.log('Running Task #7');
-  grants_data_pipeline.fsgrants(data_bucket);
+  grants_data_pipeline.geopts(data_bucket);
   }
   
   if(answer==="8"){
   console.log('Running Task #8');
-  grants_data_pipeline.csvpts(data_bucket);
+  grants_data_pipeline.grants(data_bucket);
   }
   
   if(answer==="9"){

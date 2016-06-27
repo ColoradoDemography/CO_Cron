@@ -1,5 +1,5 @@
 
-var key_data = require("./csbg_key.json");
+var key_data = require("../json/csbg_key.json");
 
 module.exports = function(entity_name){
   

@@ -178,9 +178,9 @@ Promise.all([promise1, promise2]).then(function(values) {
         return;
     }
 
-  
+
     var assign_lgid = require("./assign_lgid.js");
-  
+
     var allgrants = [];
 
   
@@ -238,7 +238,7 @@ Promise.all([promise1, promise2]).then(function(values) {
             "REGION_MANAGER": null,
             "FS_REGIONS": null
         });
-      
+
     }
 
     crunchfile(allgrants);

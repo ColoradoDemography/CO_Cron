@@ -5,10 +5,8 @@ root
 *.csv
 root/pg.php
 pg.php
-data
-db
-json
-connection.json
+output
+
 
 # Logs
 logs
