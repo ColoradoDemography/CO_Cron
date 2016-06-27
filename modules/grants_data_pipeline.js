@@ -2,7 +2,7 @@
 
 var exec = require('child_process').exec;
 
-//create geopts.json 
+//create geopts.json - for special districts map
 module.exports.fsgrants = function(data_bucket) {
     var command = "php php/fs_shapes.php";
     exec(command, {}, function(error, stdout, stderr) {
@@ -20,7 +20,7 @@ module.exports.fsgrants = function(data_bucket) {
     });
 }
 
-//create grantpts.csv for CO_Grants Application
+//create grants.csv for CO_Grants Application
 module.exports.csvpts = function(data_bucket) {
     var command = "node js/csv.js"; //save to bucket inherent in this script
     exec(command, {}, function(error, stdout, stderr) {

@@ -1,5 +1,5 @@
 <?php
-//creates geopts.json
+//creates geopts.json - used by special districts map
 //from inputs: special districts, munibounds (on GIS Server - dynamic), and counties.php (local - static)
 //result contains: coordinates (x,y) - usually centroid (except for counties), and bounding box coords "x1,y1,x2,y2"
 //plus attributes: lgid, fips, lgname, lgtype, lgstatus

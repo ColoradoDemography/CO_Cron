@@ -8,6 +8,7 @@ pg.php
 data
 db
 json
+connection.json
 
 # Logs
 logs
