@@ -77,7 +77,7 @@ foreach ($json as $value) {
     
   //enter values in order.  remember the first field needs to be a calculated unique auto-incremented integer.
 
-    $sql ="INSERT INTO bounds.lgbasic VALUES ('".$incr."', '".pg_escape_string($value['LG_ID'])."', '".pg_escape_string($value['NAME'])."', '".pg_escape_string($value['LGTYPE_ID'])."', '".pg_escape_string($value['LGSTATUS_ID'])."', '".pg_escape_string($value['ABBREV_NAME'])."', '".pg_escape_string($value['MAIL_ADDRESS'])."', '".pg_escape_string($value['ALT_ADDRESS'])."', '".pg_escape_string($value['MAIL_CITY'])."', '".pg_escape_string($value['MAIL_STATE'])."', '".pg_escape_string($value['MAIL_ZIP'])."', '".pg_escape_string($value['URL'])."', '".pg_escape_string($value['PREV_NAME'])."' );";
+    $sql ="INSERT INTO bounds.lgbasic VALUES ('".$incr."', '".pg_escape_string($value['LG_ID'])."', '".pg_escape_string($value['NAME'])."', '".pg_escape_string($value['LGTYPE_ID'])."', '".pg_escape_string($value['LGSTATUS_ID'])."', '".pg_escape_string($value['ABBREV_NAME'])."', '".pg_escape_string(addslashes($value['MAIL_ADDRESS']))."', '".pg_escape_string($value['ALT_ADDRESS'])."', '".pg_escape_string($value['MAIL_CITY'])."', '".pg_escape_string($value['MAIL_STATE'])."', '".pg_escape_string($value['MAIL_ZIP'])."', '".pg_escape_string($value['URL'])."', '".pg_escape_string($value['PREV_NAME'])."' );";
 
    $ret = pg_query($db, $sql);
    if(!$ret){
