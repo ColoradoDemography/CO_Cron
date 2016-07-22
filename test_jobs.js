@@ -96,7 +96,7 @@ console.log('');
   
   if(answer==="8"){
   console.log('Running Task #8');
-  grants_data_pipeline.grants(data_bucket);
+  grants_data_pipeline.fsgrants(data_bucket);
   }
   
   if(answer==="9"){

@@ -21,7 +21,7 @@ module.exports.geopts = function(data_bucket) {
 }
 
 //create grants.csv for CO_Grants Application
-module.exports.grants = function(data_bucket) {
+module.exports.fsgrants = function(data_bucket) {
     var command = "node js/grants.js"; //save to bucket inherent in this script
     exec(command, {}, function(error, stdout, stderr) {
         console.log('--csv-pts--');
