@@ -88,12 +88,12 @@ function processData(data) {
 
 
     //Loop through $c_counties - add to $mastershapes
-    for (let i = 0; i < counties.length; i = i + 1) {
+    for (var i = 0; i < counties.length; i = i + 1) {
         mastershapes.push(counties[i]);
     }
 
     //Loop through $csbgpts - add to $mastershapes
-    for (let j = 0; j < csbg_pts.length; j = j + 1) {
+    for (var j = 0; j < csbg_pts.length; j = j + 1) {
         mastershapes.push(csbg_pts[j]);
     }
 
