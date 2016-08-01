@@ -167,11 +167,11 @@ function crunch_db_data(dataset, output, lgbasic, lgid_crosswalk, resolve, rejec
     var mainarray = []; //staging
 
     //put database district query results into staging array
-    for (let i = 0; i < dataset.rows.length; i++) {
+    for (var i = 0; i < dataset.rows.length; i++) {
         mainarray.push(dataset.rows[i]);
     }
 
-    for (let j = 0; j < mainarray.length; j++) {
+    for (var j = 0; j < mainarray.length; j++) {
 
         //coordinates
         var elem = JSON.parse(mainarray[j].centroid);
@@ -188,11 +188,11 @@ function crunch_db_data(dataset, output, lgbasic, lgid_crosswalk, resolve, rejec
         //if no lgid present, will be converted from fips
         var lgid_lookup = mainarray[j].lgid || lookup(mainarray[j].city, lgid_crosswalk);
 
-        for (let k = 0; k < lgbasic.length; k = k + 1) {
+        for (var k = 0; k < lgbasic.length; k = k + 1) {
 
             if (lgbasic[k].LG_ID === lgid_lookup) {
 
-                let obj_temp = {
+                var obj_temp = {
                     'lgid': lgid_lookup,
                     'fips': mainarray[j].city || null,
                     'lgname': lgbasic[k].NAME,
