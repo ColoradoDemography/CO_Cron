@@ -12,6 +12,7 @@ var gcs = gcloud.storage({
 });
 var data_bucket = gcs.bucket('co-publicdata');
 var db_bucket = gcs.bucket('dola-db-dump');
+var bls_bucket = gcs.bucket('bls-data');
 
 mkdirp('data', function(err) { console.log('data folder created'); });
 mkdirp('db', function(err) { console.log('db folder created'); });
@@ -57,7 +58,7 @@ var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){ grants_data_pipel
 var geopts = schedule.scheduleJob('40 22 * * 0', function(){ grants_data_pipeline.geopts(data_bucket); });  
 
 /* BLS Data Pipeline */
-var bls = schedule.scheduleJob('42 22 * * *', function(){ bls_data_pipeline(data_bucket); });
+var bls = schedule.scheduleJob('42 22 * * *', function(){ bls_data_pipeline(bls_bucket); });
 
 /* Grant Program Exports */
 var fml = schedule.scheduleJob('44 22 * * 0', function(){ grants_export('FML'); });  
