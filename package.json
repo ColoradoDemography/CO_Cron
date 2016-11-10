@@ -29,6 +29,7 @@
     "mkdirp": "^0.5.1",
     "node-schedule": "^1.1.0",
     "pg": "^6.0.1",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "winston": "^2.3.0"
   }
 }
