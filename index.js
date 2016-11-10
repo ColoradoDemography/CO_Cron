@@ -14,6 +14,25 @@ var data_bucket = gcs.bucket('co-publicdata');
 var db_bucket = gcs.bucket('dola-db-dump');
 var bls_bucket = gcs.bucket('bls-data');
 
+var winston = require('winston');
+var fs = require('fs');
+var env = process.env.NODE_ENV || 'development';
+var logDir = 'log';
+// Create the log directory if it does not exist
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+var tsFormat = () => (new Date()).toLocaleTimeString();
+var logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.File)({
+      filename: `${logDir}/results.log`,
+      timestamp: tsFormat,
+      level: env === 'development' ? 'debug' : 'info'
+    })
+  ]
+});
+
 mkdirp('data', function(err) { console.log('data folder created'); });
 mkdirp('db', function(err) { console.log('db folder created'); });
 
@@ -47,6 +66,8 @@ var soil = schedule.scheduleJob('24 22 * * 0', function(){ sd.soil_districts(dat
 var cemetary = schedule.scheduleJob('26 22 * * 0', function(){ sd.cemetary_districts(data_bucket); });
 var all = schedule.scheduleJob('28 22 * * 0', function(){ sd.all_districts(data_bucket); });
 
+logger.info(all);
+
 /* LOAD FROM ORACLE-EXPORTED JSON (requires .pgpass installed) */
 var lg2cnty = schedule.scheduleJob('30 22 * * 0', function(){ dola_data_upload.lg2cnty(); });  
 var lgbasic = schedule.scheduleJob('32 22 * * 0', function(){ dola_data_upload.lgbasic(); });  
@@ -74,3 +95,5 @@ var dr = schedule.scheduleJob('53 22 * * 0', function(){ grants_export('DR'); })
 var csbg = schedule.scheduleJob('54 22 * * 0', function(){ grants_export('CSBG'); });
 var cdbg = schedule.scheduleJob('55 22 * * 0', function(){ grants_export('CDBG'); });
 var all = schedule.scheduleJob('56 22 * * 0', function(){ grants_export('FML,SEV_DIST,VFP,CTF,SAR,FFB,EIAF,GAME,REDI,DR,CSBG,CDBG'); });
+
+logger.info(all);
