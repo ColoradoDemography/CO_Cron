@@ -65,8 +65,7 @@ var school = schedule.scheduleJob('22 22 * * 0', function(){ sd.school_districts
 var soil = schedule.scheduleJob('24 22 * * 0', function(){ sd.soil_districts(data_bucket); });
 var cemetary = schedule.scheduleJob('26 22 * * 0', function(){ sd.cemetary_districts(data_bucket); });
 var all = schedule.scheduleJob('28 22 * * 0', function(){ sd.all_districts(data_bucket); });
-
-logger.info(all);
+var log1 = schedule.scheduleJob('30 22 * * 0', function(){ logger.info(all); });
 
 /* LOAD FROM ORACLE-EXPORTED JSON (requires .pgpass installed) */
 var lg2cnty = schedule.scheduleJob('30 22 * * 0', function(){ dola_data_upload.lg2cnty(); });  
@@ -95,5 +94,4 @@ var dr = schedule.scheduleJob('53 22 * * 0', function(){ grants_export('DR'); })
 var csbg = schedule.scheduleJob('54 22 * * 0', function(){ grants_export('CSBG'); });
 var cdbg = schedule.scheduleJob('55 22 * * 0', function(){ grants_export('CDBG'); });
 var all = schedule.scheduleJob('56 22 * * 0', function(){ grants_export('FML,SEV_DIST,VFP,CTF,SAR,FFB,EIAF,GAME,REDI,DR,CSBG,CDBG'); });
-
-logger.info(all);
+var log2 = schedule.scheduleJob('58 22 * * 0', function(){ logger.info(all); });
