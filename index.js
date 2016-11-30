@@ -8,7 +8,7 @@ var mkdirp = require('mkdirp');
 var gcloud = require('gcloud');
 var gcs = gcloud.storage({
   projectId: 'dola-gis-server',
-  keyFilename: 'root/dola-gis-server-f143cd56dce3.json'
+  keyFilename: 'root/dola-gis-server-79665239667c.json'
 });
 var data_bucket = gcs.bucket('co-publicdata');
 var db_bucket = gcs.bucket('dola-db-dump');
