@@ -23,7 +23,6 @@ if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 var tsFormat = () => (new Date()).toLocaleTimeString();
-var timeNow = new Date()).toLocaleTimeString();
 //var logger = new (winston.Logger)({
 //  transports: [
 //    new (winston.transports.File)({
@@ -34,8 +33,8 @@ var timeNow = new Date()).toLocaleTimeString();
 //  ]
 //});
 
-mkdirp('data', function(err) { console.log('data folder created:'+timeNow); });
-mkdirp('db', function(err) { console.log('db folder created:'+timeNow); });
+mkdirp('data', function(err) { console.log('data folder created'); });
+mkdirp('db', function(err) { console.log('db folder created'); });
 
 
 // Require Custom Modules
