@@ -44,6 +44,7 @@ var bls_data_pipeline = require('./modules/bls_data_pipeline.js');
 var grants_data_pipeline = require('./modules/grants_data_pipeline.js');
 var dola_data_upload = require('./modules/dola_data_upload.js');
 var grants_export = require('./modules/grants_export.js');
+var munis = require('./modules/annexations.js');
 
 //temp test tasks
 //bls_data_pipeline(data_bucket);
@@ -95,3 +96,9 @@ var csbg = schedule.scheduleJob('54 22 * * 0', function(){ grants_export('CSBG')
 var cdbg = schedule.scheduleJob('55 22 * * 0', function(){ grants_export('CDBG'); });
 var all = schedule.scheduleJob('56 22 * * 0', function(){ grants_export('FML,SEV_DIST,VFP,CTF,SAR,FFB,EIAF,GAME,REDI,DR,CSBG,CDBG'); });
 
+/* Annexations (requires google api key + instance permissions) */
+var annexations = schedule.scheduleJob('57 22 * * 0', function(){ munis.annexations(data_bucket); });  
+var deannexations = schedule.scheduleJob('58 22 * * 0', function(){ munis.deannexations(data_bucket); });
+var dola_muni = schedule.scheduleJob('59 22 * * 0', function(){ munis.dola_muni(data_bucket); });
+var munibounds = schedule.scheduleJob('00 23 * * 0', function(){ munis.munibounds(data_bucket); });
+var web_annexations = schedule.scheduleJob('01 23 * * 0', function(){ munis.web_annexations(data_bucket); });
