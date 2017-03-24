@@ -337,14 +337,15 @@ function crunchfile(result) {
                             "projectnmbr": result[i].PROJECT_NMBR,
                             "dateofaward": result[i].DATE_OF_AWARD,       
                             "lgid": result[i].LG_ID,
-                            "program": result[i].PROGRAM_TYPE
+                            "program": result[i].PROGRAM_TYPE,
+                            "county": result[i].COUNTY
                         });  
               }
 
 
             } //end i
 
-            var fields = ['award', 'projname', 'projectnmbr', 'dateofaward', 'lgid', 'program'];
+            var fields = ['award', 'projname', 'projectnmbr', 'dateofaward', 'lgid', 'program', 'county'];
           
             json2csv({
                 data: grantpts,
