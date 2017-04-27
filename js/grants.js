@@ -36,7 +36,7 @@ var program = ["CDBG","CSBG","DR","EIAF","GAME","REDI","CTF","FFB","FML","FML_SB
 var promise1 = new Promise(function(resolve, reject) {
 
     request({
-        url: 'https://dola.colorado.gov/gis-tmp/competitive.json',
+        url: 'https://dola.colorado.gov/gis-tmp/competitive2.json',
         json: true
     }, function(error, response, body) {
         if (!error && response.statusCode === 200) {
