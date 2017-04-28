@@ -14,7 +14,6 @@ var data_bucket = gcs.bucket('co-publicdata');
 var db_bucket = gcs.bucket('dola-db-dump');
 var bls_bucket = gcs.bucket('bls-data');
 
-var winston = require('winston');
 var fs = require('fs');
 var env = process.env.NODE_ENV || 'development';
 var logDir = 'log';
@@ -23,15 +22,6 @@ if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 var tsFormat = () => (new Date()).toLocaleTimeString();
-//var logger = new (winston.Logger)({
-//  transports: [
-//    new (winston.transports.File)({
-//      filename: `${logDir}/results.log`,
-//      timestamp: tsFormat,
-//      level: 'debug'
-//    })
-//  ]
-//});
 
 mkdirp('data', function(err) { console.log('data folder created'); });
 mkdirp('db', function(err) { console.log('db folder created'); });
