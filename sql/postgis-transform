@@ -1,0 +1,45 @@
+DROP TABLE IF EXISTS bounds.annex_union;
+CREATE TABLE bounds.annex_union AS
+SELECT ST_Union(geom) as geom
+FROM bounds.annexations;
+
+DROP TABLE IF EXISTS bounds.polygons_erased;
+CREATE TABLE bounds.polygons_erased AS
+SELECT ST_Difference(ST_MakeValid(a.geom), ST_MakeValid(b.geom)) as geom, a.gid, a.statefp, a.geoid, a.namelsad, a.city, a.cityname
+FROM bounds.annex_union as b, bounds.dola_muni as a;
+
+alter table bounds.polygons_erased drop column statefp, drop column geoid, drop column namelsad;
+
+alter table bounds.polygons_erased add column rec_num character varying(15), add column county character varying(3), add column cl_re_date date, add column descr character varying(100), add column ord_num character varying(50), add column type character varying(1), add column notes character varying(100);
+
+drop table if exists bounds.web_annexations;
+CREATE TABLE bounds.web_annexations AS( 
+SELECT gid, rec_num, county, city, cl_re_date, descr, ord_num, type, notes, cityname, geom 
+FROM bounds.polygons_erased
+UNION 
+SELECT gid, rec_num, county, city, cl_re_date, descr, ord_num, type, notes, cityname, geom 
+FROM bounds.annexations
+);
+
+-- UPDATE bounds.web_annexations SET geom=ST_MakeValid(geom);
+  
+-- SELECT Populate_Geometry_Columns('bounds.web_annexations'::regclass);
+
+drop table if exists bounds.munibounds;
+create table bounds.munibounds as 
+SELECT c.city, max(c.cityname) as first_city, ST_Union(ST_Buffer(geom, 0.0000001)) as geom 
+FROM bounds.web_annexations c GROUP BY c.city;
+
+-- UPDATE bounds.munibounds SET geom=ST_MakeValid(geom);
+
+-- SELECT Populate_Geometry_Columns('bounds.munibounds'::regclass);
+
+ALTER TABLE bounds.munibounds ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE bounds.web_annexations ADD COLUMN id SERIAL PRIMARY KEY;
+
+GRANT USAGE ON SCHEMA bounds TO codemog;
+GRANT SELECT ON ALL TABLES IN SCHEMA bounds TO codemog;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA bounds TO codemog;
+
+DROP TABLE IF EXISTS bounds.annex_union;
+DROP TABLE IF EXISTS bounds.polygons_erased;
