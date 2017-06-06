@@ -7,12 +7,12 @@ var execSync = require('child_process').execSync;
 
 
 module.exports.annexations = function(data_bucket) {
-    var command = "pgsql2shp -f data/annexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,desc,ord_num,type,notes,cityname from dola.bounds.annexations;\" ";
+    var command = "pgsql2shp -f data/annexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.annexations;\" ";
     apply_args(data_bucket, command, 'annexations', '--annex--');
 }
 
 module.exports.deannexations = function(data_bucket) {
-    var command = "pgsql2shp -f data/deannexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,desc,ord_num,type,notes,cityname from dola.bounds.deannexations;\" ";
+    var command = "pgsql2shp -f data/deannexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.deannexations;\" ";
     apply_args(data_bucket, command, 'deannexations', '--deannex--');
 }
 
@@ -27,7 +27,7 @@ module.exports.muni_bounds = function(data_bucket) {
 }
 
 module.exports.muni_bounds = function(data_bucket) {
-    var command = "pgsql2shp -f data/web_annexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,desc,ord_num,type,notes,cityname from dola.bounds.web_annexations;\" ";
+    var command = "pgsql2shp -f data/web_annexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.web_annexations;\" ";
     apply_args(data_bucket, command, 'web_annexations', '--web_annex--');
 }
 
