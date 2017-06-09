@@ -7,27 +7,27 @@ var execSync = require('child_process').execSync;
 
 
 module.exports.annexations = function(data_bucket) {
-    var command = "pgsql2shp -f data/annexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.annexations;\" ";
+    var command = "pgsql2shp -f data/annexations -h 104.197.26.248 -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.annexations;\" ";
     apply_args(data_bucket, command, 'annexations', '--annex--');
 }
 
 module.exports.deannexations = function(data_bucket) {
-    var command = "pgsql2shp -f data/deannexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.deannexations;\" ";
+    var command = "pgsql2shp -f data/deannexations -h 104.197.26.248 -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.deannexations;\" ";
     apply_args(data_bucket, command, 'deannexations', '--deannex--');
 }
 
 module.exports.dola_muni = function(data_bucket) {
-    var command = "pgsql2shp -f data/dola_muni -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select statefp,geoid,namelsad,city,cityname from dola.bounds.dola_muni;\" ";
+    var command = "pgsql2shp -f data/dola_muni -h 104.197.26.248 -u codemog -p 5433 -P demography dola \"select statefp,geoid,namelsad,city,cityname from dola.bounds.dola_muni;\" ";
     apply_args(data_bucket, command, 'dola_muni', '--dola_muni--');
 }
 
 module.exports.muni_bounds = function(data_bucket) {
-    var command = "pgsql2shp -f data/munibounds -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select city,first_city from dola.bounds.munibounds;\" ";
+    var command = "pgsql2shp -f data/munibounds -h 104.197.26.248 -u codemog -p 5433 -P demography dola \"select city,first_city from dola.bounds.munibounds;\" ";
     apply_args(data_bucket, command, 'munibounds', '--muni--');
 }
 
 module.exports.muni_bounds = function(data_bucket) {
-    var command = "pgsql2shp -f data/web_annexations -h gis.dola.colorado.gov -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.web_annexations;\" ";
+    var command = "pgsql2shp -f data/web_annexations -h 104.197.26.248 -u codemog -p 5433 -P demography dola \"select rec_num,county,city,cl_re_date,descr,ord_num,type,notes,cityname from dola.bounds.web_annexations;\" ";
     apply_args(data_bucket, command, 'web_annexations', '--web_annex--');
 }
 
