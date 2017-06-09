@@ -91,7 +91,7 @@ exit;
 //call the bls api
 function callapi($geo, $startyear, $endyear){
   
-$url = 'http://api.bls.gov/publicAPI/v2/timeseries/data/';
+$url = 'https://api.bls.gov/publicAPI/v2/timeseries/data/';
         $method = 'POST';
         $query = array(
                 'seriesid'  => $geo,
