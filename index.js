@@ -43,7 +43,7 @@ var munis = require('./modules/annexations.js');
 /*  SCHEDULED TASKS  */
 
 //pg_dump Dola Database
-var dola = schedule.scheduleJob('5 22 * * 1', function(){ dump_dola_database(db_bucket); });  
+var dola = schedule.scheduleJob('5 22 * * 2', function(){ dump_dola_database(db_bucket); });  
 
 /* SPECIAL DISTRICTs (requires google api key + instance permissions) */
 var metro = schedule.scheduleJob('10 22 * * 0', function(){ sd.metro_districts(data_bucket); });  
