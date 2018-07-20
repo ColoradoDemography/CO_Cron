@@ -88,8 +88,8 @@ var mj = schedule.scheduleJob('56 22 * * 0', function(){ grants_export('MJ'); })
 var all = schedule.scheduleJob('57 22 * * 0', function(){ grants_export('FML,SEV_DIST,VFP,CTF,SAR,FFB,EIAF,GAME,REDI,DR,CSBG,CDBG,MJ'); });
 
 /* Annexations (requires google api key + instance permissions) */
-var annexations = schedule.scheduleJob('58 22 * * 0', function(){ munis.annexations(data_bucket); });  
-var deannexations = schedule.scheduleJob('59 22 * * 0', function(){ munis.deannexations(data_bucket); });
-var dola_muni = schedule.scheduleJob('00 23 * * 0', function(){ munis.dola_muni(data_bucket); });
-var munibounds = schedule.scheduleJob('01 23 * * 0', function(){ munis.munibounds(data_bucket); });
-var web_annexations = schedule.scheduleJob('02 23 * * 0', function(){ munis.web_annexations(data_bucket); });
+var annexations = schedule.scheduleJob('58 22 * * 5', function(){ annexations.annexations(data_bucket); });  
+var deannexations = schedule.scheduleJob('59 22 * * 5', function(){ annexations.deannexations(data_bucket); });
+var dola_muni = schedule.scheduleJob('00 23 * * 5', function(){ annexations.dola_muni(data_bucket); });
+var munibounds = schedule.scheduleJob('01 23 * * 5', function(){ annexations.munibounds(data_bucket); });
+var web_annexations = schedule.scheduleJob('02 23 * * 5', function(){ annexations.web_annexations(data_bucket); });
