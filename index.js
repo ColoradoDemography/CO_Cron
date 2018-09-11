@@ -59,14 +59,14 @@ var all = schedule.scheduleJob('28 22 * * 0', function(){ sd.all_districts(data_
 
 
 /* LOAD FROM ORACLE-EXPORTED JSON (requires .pgpass installed) */
-var lg2cnty = schedule.scheduleJob('30 2 * * 2', function(){ dola_data_upload.lg2cnty(); });  
-var lgbasic = schedule.scheduleJob('32 2 * * 2', function(){ dola_data_upload.lgbasic(); });  
-var lginfo = schedule.scheduleJob('34 2 * * 2', function(){ dola_data_upload.lginfo(); });  
-var limlevy = schedule.scheduleJob('36 2 * * 2', function(){ dola_data_upload.limlevy(); });  
+var lg2cnty = schedule.scheduleJob('30 22 * * 0', function(){ dola_data_upload.lg2cnty(); });  
+var lgbasic = schedule.scheduleJob('32 22 * * 0', function(){ dola_data_upload.lgbasic(); });  
+var lginfo = schedule.scheduleJob('34 22 * * 0', function(){ dola_data_upload.lginfo(); });  
+var limlevy = schedule.scheduleJob('36 22 * * 0', function(){ dola_data_upload.limlevy(); });  
 
 /* Prepare FS Grants Data (requires .pgpass installed, and google api key + instance permissions) */
-var fsgrants = schedule.scheduleJob('38 2 * * 2', function(){ grants_data_pipeline.fsgrants(data_bucket); });  
-var geopts = schedule.scheduleJob('40 2 * * 2', function(){ grants_data_pipeline.geopts(data_bucket); });  
+var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){ grants_data_pipeline.fsgrants(data_bucket); });  
+var geopts = schedule.scheduleJob('40 22 * * 0', function(){ grants_data_pipeline.geopts(data_bucket); });  
 
 /* BLS Data Pipeline */
 var bls = schedule.scheduleJob('42 22 * * 3', function(){ bls_data_pipeline(bls_bucket); });
@@ -88,8 +88,8 @@ var mj = schedule.scheduleJob('56 22 * * 0', function(){ grants_export('MJ'); })
 var all = schedule.scheduleJob('57 22 * * 0', function(){ grants_export('FML,SEV_DIST,VFP,CTF,SAR,FFB,EIAF,GAME,REDI,DR,CSBG,CDBG,MJ'); });
 
 /* Annexations (requires google api key + instance permissions) */
-var annexations = schedule.scheduleJob('58 22 * * 3', function(){ annexations.annexations(data_bucket); });  
-var deannexations = schedule.scheduleJob('59 22 * * 3', function(){ annexations.deannexations(data_bucket); });
-var dola_muni = schedule.scheduleJob('00 23 * * 3', function(){ annexations.dola_muni(data_bucket); });
-var munibounds = schedule.scheduleJob('01 23 * * 3', function(){ annexations.munibounds(data_bucket); });
-var web_annexations = schedule.scheduleJob('02 23 * * 3', function(){ annexations.web_annexations(data_bucket); });
+var annexations = schedule.scheduleJob('58 22 * * 0', function(){ annexations.annexations(data_bucket); });  
+var deannexations = schedule.scheduleJob('59 22 * * 0', function(){ annexations.deannexations(data_bucket); });
+var dola_muni = schedule.scheduleJob('00 23 * * 0', function(){ annexations.dola_muni(data_bucket); });
+var munibounds = schedule.scheduleJob('01 23 * * 0', function(){ annexations.munibounds(data_bucket); });
+var web_annexations = schedule.scheduleJob('02 23 * * 0', function(){ annexations.web_annexations(data_bucket); });
