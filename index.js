@@ -59,14 +59,14 @@ var all = schedule.scheduleJob('28 22 * * 0', function(){ sd.all_districts(data_
 
 
 /* LOAD FROM ORACLE-EXPORTED JSON (requires .pgpass installed) */
-var lg2cnty = schedule.scheduleJob('30 22 * * 4', function(){ dola_data_upload.lg2cnty(); });  
-var lgbasic = schedule.scheduleJob('32 22 * * 4', function(){ dola_data_upload.lgbasic(); });  
-var lginfo = schedule.scheduleJob('34 22 * * 4', function(){ dola_data_upload.lginfo(); });  
-var limlevy = schedule.scheduleJob('36 22 * * 4', function(){ dola_data_upload.limlevy(); });  
+var lg2cnty = schedule.scheduleJob('30 22 * * 0', function(){ dola_data_upload.lg2cnty(); });  
+var lgbasic = schedule.scheduleJob('32 22 * * 0', function(){ dola_data_upload.lgbasic(); });  
+var lginfo = schedule.scheduleJob('34 22 * * 0', function(){ dola_data_upload.lginfo(); });  
+var limlevy = schedule.scheduleJob('36 22 * * 0', function(){ dola_data_upload.limlevy(); });  
 
 /* Prepare FS Grants Data (requires .pgpass installed, and google api key + instance permissions) */
-var fsgrants = schedule.scheduleJob('38 22 * * 4', function(){ grants_data_pipeline.fsgrants(data_bucket); });  
-var geopts = schedule.scheduleJob('40 22 * * 4', function(){ grants_data_pipeline.geopts(data_bucket); });  
+var fsgrants = schedule.scheduleJob('38 22 * * 0', function(){ grants_data_pipeline.fsgrants(data_bucket); });  
+var geopts = schedule.scheduleJob('40 22 * * 0', function(){ grants_data_pipeline.geopts(data_bucket); });  
 
 /* BLS Data Pipeline */
 var bls = schedule.scheduleJob('42 22 * * 3', function(){ bls_data_pipeline(bls_bucket); });
