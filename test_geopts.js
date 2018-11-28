@@ -6,7 +6,7 @@ var gcloud = require('gcloud');
 
 var gcs = gcloud.storage({
   projectId: 'dola-gis-server',
-  keyFilename: 'root/dola-gis-server-79665239667c.json'
+  keyFilename: 'root/dola-gis-server-7b71706a971f.json'
 });
 
 var data_bucket = gcs.bucket('co-publicdata');
