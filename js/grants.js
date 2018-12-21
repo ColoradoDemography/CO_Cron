@@ -47,7 +47,7 @@ var promise1 = new Promise(function(resolve, reject) {
                 var flag = false;
 
                 //date filter  
-                var date_award = parseDate(competitive_data.DATE_OF_AWARD, competitive_data);
+                var date_award = parseDate(competitive_data.AWARD_DATE, competitive_data);
                 if (date_award >= min_date && date_award <= max_date) {
                     flag = true;
                 }
@@ -200,7 +200,7 @@ Promise.all([promise1, promise2]).then(function(values) {
             "PROJECT_NAME": competitive[i].PROJECT_NAME,
             "PROJECT_DESCRIPTION": competitive[i].PROJECT_DESCRIPTION,
             "ENTITY_APPLICANT": competitive[i].APPLICANT_TITLE,
-            "DATE_OF_AWARD": competitive[i].DATE_OF_AWARD,
+            "DATE_OF_AWARD": competitive[i].AWARD_DATE,
             "FY_AWARD": competitive[i].FY_AWARD,
             "EXECUTION_DATE": competitive[i].EXECUTION_DATE,
             "FY_EXEC": competitive[i].FY_EXEC,
