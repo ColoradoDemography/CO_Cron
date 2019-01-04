@@ -29,7 +29,7 @@ var max_date = new Date();
 
 
 //all programs not listed below will be filtered out
-var program = ["CDBG","CSBG","DR","EIAF","GAME","REDI","CTF","FFB","FML","FML_SB106","SAR","SEV_DIST","VFP", "MJ"];
+var program = ["CDBG","CSBG","DR","EIAF","GAME","REDI","CTF","FFB","FML","FML_SB106","SAR","SEV_DIST","VFP", "MJ", "SAR Tier 3", "SAR Tier 1", "SAR EoY"];
 
 
   //get raw competitve grants =competitve
