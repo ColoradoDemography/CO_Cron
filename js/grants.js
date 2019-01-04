@@ -335,7 +335,7 @@ function crunchfile(result) {
                             "award": result[i].AMT_AWARDED,
                             "projname": result[i].PROJECT_NAME,        
                             "projectnmbr": result[i].PROJECT_NMBR,
-                            "dateofaward": result[i].DATE_OF_AWARD,       
+                            "dateofaward": result[i].AWARD_DATE,       
                             "lgid": result[i].LG_ID,
                             "program": result[i].PROGRAM_TYPE,
                             "county": result[i].COUNTY
