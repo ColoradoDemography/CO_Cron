@@ -36,7 +36,7 @@ $state =  substr($carray[$i],5,2);  //extract the state fips from the BLS LAUCN 
       //loop through every multidimensional array index, run the functions below
       
       //two api calls
-      $outputset1=callapi($countymulti[$k], "2010", date("Y"));
+      $outputset1=callapi($countymulti[$k], "2010", "2018"); //change in February
       $outputset2=callapi($countymulti[$k], "1990", "2009");
 
       //reorganize data
