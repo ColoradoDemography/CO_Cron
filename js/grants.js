@@ -352,8 +352,8 @@ function crunchfile(result) {
                 fields: fields
             }, function(err, csv) {
                 if (err) console.log(err);
-                fs.writeFileSync('data/grants2.csv', csv);
-                data_bucket.upload('data/grants2.csv', { gzip: true }, function(err, file) {
+                fs.writeFileSync('data/grants.csv', csv);
+                data_bucket.upload('data/grants.csv', { gzip: true }, function(err, file) {
                     if (!err) {
                         console.log('success uploading grants.csv');
                     } else {
