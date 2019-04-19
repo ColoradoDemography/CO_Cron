@@ -65,11 +65,11 @@ var lginfo = schedule.scheduleJob('34 22 * * 0', function(){ dola_data_upload.lg
 var limlevy = schedule.scheduleJob('36 22 * * 0', function(){ dola_data_upload.limlevy(); });  
 
 /* Prepare FS Grants Data (requires .pgpass installed, and google api key + instance permissions) */
-var competitive = schedule.scheduleJob('30 22 * * 6', function(){ grants_data_pipeline.competitive(bls_bucket); }); 
-var allcompetitive = schedule.scheduleJob('32 22 * * 6', function(){ grants_data_pipeline.allcompetitive(bls_bucket); });
-var formulaic = schedule.scheduleJob('34 22 * * 6', function(){ grants_data_pipeline.formulaic(bls_bucket); });
-var allformulaic = schedule.scheduleJob('36 22 * * 6', function(){ grants_data_pipeline.allformulaic(bls_bucket); });
-var fsgrants = schedule.scheduleJob('38 22 * * 6', function(){ grants_data_pipeline.fsgrants(data_bucket); });  
+//var competitive = schedule.scheduleJob('30 22 * * 6', function(){ grants_data_pipeline.competitive(bls_bucket); }); 
+//var allcompetitive = schedule.scheduleJob('32 22 * * 6', function(){ grants_data_pipeline.allcompetitive(bls_bucket); });
+//var formulaic = schedule.scheduleJob('34 22 * * 6', function(){ grants_data_pipeline.formulaic(bls_bucket); });
+//var allformulaic = schedule.scheduleJob('36 22 * * 6', function(){ grants_data_pipeline.allformulaic(bls_bucket); });
+//var fsgrants = schedule.scheduleJob('38 22 * * 6', function(){ grants_data_pipeline.fsgrants(data_bucket); });  
 var geopts = schedule.scheduleJob('40 22 * * 6', function(){ grants_data_pipeline.geopts(data_bucket); });  
 
 /* BLS Data Pipeline */
