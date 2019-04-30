@@ -13,7 +13,6 @@ apt-get update && \
 apt-get install -y nodejs postgresql-9.4-postgis-2.4 postgis zip 
 # php5 php5-pgsql previously installed on prior line
 
-FROM merorafael/php:7.1-fpm
 # Install Oracle Instantclient
 RUN mkdir /opt/oracle \
     && cd /opt/oracle \
