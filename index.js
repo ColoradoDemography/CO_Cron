@@ -74,7 +74,7 @@ var limlevy = schedule.scheduleJob('36 22 * * 0', function(){ dola_data_upload.l
 
 /* BLS Data Pipeline */
 var bls = schedule.scheduleJob('42 22 * * 2', function(){ bls_data_pipeline(bls_bucket); });
-var bls = schedule.scheduleJob('42 22 * * 3', function(){ bls_data_pipeline(bls_bucket); });
+var bls2 = schedule.scheduleJob('42 22 * * 3', function(){ bls_data_pipeline(bls_bucket); });
 
 /* Grant Program Exports */
 var fml = schedule.scheduleJob('44 22 * * 6', function(){ grants_export('FML'); });  
