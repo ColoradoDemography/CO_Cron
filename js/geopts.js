@@ -16,7 +16,7 @@ var parray = [];
 
 
 parray[0] = new Promise(function(resolve, reject) {
-    request('https://dola.colorado.gov/gis-tmp/lgbasic.json', function(error, response, body) {
+    request('https://storage.googleapis.com/co-publicdata/lgbasic.json', function(error, response, body) {
         if (!error && response.statusCode == 200) {
             resolve(JSON.parse(body));
         } else {
