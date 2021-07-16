@@ -16,7 +16,7 @@ $credentials = "user=postgres";
 
 //require "/root/pg.php";
 
-$str = file_get_contents('https://dola.colorado.gov/gis-tmp/limlevy.json');
+$str = file_get_contents('https://storage.googleapis.com/co-publicdata/limlevy.json');
 
 $json = json_decode($str, true); // decode the JSON into an associative array
 
