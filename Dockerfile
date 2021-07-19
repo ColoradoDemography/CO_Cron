@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:12
+FROM ubuntu:14.04
 MAINTAINER Daniel Trone "daniel.trone@state.co.us"
 
 
