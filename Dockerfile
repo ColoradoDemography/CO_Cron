@@ -7,6 +7,7 @@ ADD . .
   
 RUN apt-get update && apt-get install -y wget curl && \
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && \
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1655A0AB68576280 && \
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc/apt/sources.list.d/postgresql.list' && \
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - && \
 apt-get update && \
