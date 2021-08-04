@@ -13,10 +13,7 @@ DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata && \
 apt-get update && \
 apt-get install -y nodejs postgresql-12-postgis-3 zip php php-pgsql
 
-#testing npm connection
-RUN curl -v https://registry.npmjs.com/
-
 # If you need npm, don't use a base tag
-RUN npm install
+RUN npm install --network=host
 
 CMD ["nodejs", "index.js"]
