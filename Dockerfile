@@ -15,6 +15,7 @@ apt-get update && \
 apt-get install -y nodejs postgresql-12-postgis-3 zip php php-pgsql
 
 # If you need npm, don't use a base tag
-RUN npm install --force
+RUN nvm install --lts
+#RUN npm install --force
 
 CMD ["nodejs", "index.js"]
