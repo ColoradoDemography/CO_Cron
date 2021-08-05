@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+#FROM ubuntu:20.04
+FROM node:8.12-alpine
 MAINTAINER Todd Bleess "todd.bleess@state.co.us"
 
 
@@ -15,7 +16,7 @@ apt-get update && \
 apt-get install -y nodejs postgresql-12-postgis-3 zip php php-pgsql
 
 # If you need npm, don't use a base tag
-RUN npm install -g node-gyp
+#RUN npm install -g node-gyp
 RUN npm install
 
 CMD ["nodejs", "index.js"]
